@@ -548,17 +548,48 @@ section {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
-        padding: 0 15px;
+        padding: 0 20px;
+        width: 100%;
     }
 
     .hero-title {
         font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        gap: 1rem;
     }
 
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
-        padding: 0 15px;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    .about-text p {
+        text-align: left;
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .about-stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
     }
 
     .timeline::before {
@@ -568,8 +599,9 @@ section {
     .timeline-item:nth-child(odd) .timeline-content,
     .timeline-item:nth-child(even) .timeline-content {
         margin-left: 50px;
-        margin-right: 0;
+        margin-right: 20px;
         text-align: left;
+        padding: 1.5rem;
     }
 
     .timeline-item:nth-child(odd) .timeline-content::before,
@@ -580,33 +612,67 @@ section {
     .contact-content {
         grid-template-columns: 1fr;
         gap: 2rem;
-        padding: 0 15px;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
     }
 
     .skills-grid {
         grid-template-columns: 1fr;
-        padding: 0 15px;
+        padding: 0 20px;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    .skill-category {
+        padding: 1.5rem;
+    }
+
+    .skill-items {
+        justify-content: flex-start;
+        gap: 0.5rem;
+    }
+
+    .skill-tag {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
     }
 
     .section-title {
         font-size: 2rem;
+        margin-bottom: 2rem;
     }
 
     .hero-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
     }
 
     .btn {
         width: 100%;
         max-width: 250px;
         text-align: center;
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
     
     .container {
@@ -619,6 +685,33 @@ section {
     
     .hero-container {
         padding: 0 15px;
+    }
+
+    .about-content {
+        padding: 0 15px;
+    }
+
+    .contact-content {
+        padding: 0 15px;
+    }
+
+    .skills-grid {
+        padding: 0 15px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-right: 15px;
+        padding: 1rem;
+    }
+
+    .skill-category {
+        padding: 1rem;
+    }
+
+    .skill-tag {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.7rem;
     }
 }
 
@@ -874,18 +967,21 @@ section {
 @media (max-width: 360px) {
     .hero-title {
         font-size: 1.8rem;
+        line-height: 1.1;
     }
     
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .hero-description {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
     
     .section-title {
         font-size: 1.8rem;
+        margin-bottom: 1.5rem;
     }
     
     .container {
@@ -899,6 +995,33 @@ section {
     .hero-container {
         padding: 0 10px;
     }
+
+    .about-content {
+        padding: 0 10px;
+    }
+
+    .contact-content {
+        padding: 0 10px;
+    }
+
+    .skills-grid {
+        padding: 0 10px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-right: 10px;
+        padding: 0.75rem;
+    }
+
+    .skill-category {
+        padding: 0.75rem;
+    }
+
+    .skill-tag {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
     
     .chat-interface {
         width: 260px;
@@ -908,5 +1031,10 @@ section {
     .chatbot-container {
         bottom: 15px;
         right: 15px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
     }
 } 
