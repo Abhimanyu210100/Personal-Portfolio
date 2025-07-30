@@ -361,14 +361,14 @@ section {
 .timeline-content ul {
     list-style: none;
     padding-left: 0;
-    /* text-align: justify; */
+    text-align: left;
 }
 
 .timeline-content li {
     margin-bottom: 0.5rem;
     position: relative;
     padding-left: 1.5rem;
-    /* text-align: justify; */
+    text-align: left;
 }
 
 .timeline-content li::before {
