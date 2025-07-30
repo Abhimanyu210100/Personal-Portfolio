@@ -42,6 +42,7 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <canvas id="floatingDots" class="floating-dots-canvas"></canvas>
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
@@ -295,6 +296,39 @@
             <p>&copy; 2024 Abhimanyu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <!-- Chat Button -->
+        <div class="chat-button" id="chatButton">
+            <i class="fas fa-comments"></i>
+        </div>
+        
+        <!-- Chat Interface -->
+        <div class="chat-interface" id="chatInterface">
+            <div class="chat-header">
+                <h3>Chat with Abhimanyu</h3>
+                <button class="close-chat" id="closeChat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>Hi! I'm Abhimanyu's AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <form id="chatForm">
+                    <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
