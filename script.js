@@ -61,9 +61,12 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Contact form handling
+// Contact form handling with EmailJS
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+    // Initialize EmailJS
+    emailjs.init("WDiBByEIGYIU1PsRP"); // You'll need to replace this with your actual EmailJS public key
+    
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -76,22 +79,97 @@ if (contactForm) {
         
         // Simple validation
         if (!name || !email || !subject || !message) {
-            alert('Please fill in all fields');
+            showNotification('Please fill in all fields', 'error');
             return;
         }
         
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
+            showNotification('Please enter a valid email address', 'error');
             return;
         }
         
-        // Here you would typically send the form data to your backend
-        // For now, we'll just show a success message
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        this.reset();
+        // Show loading state
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitButton.disabled = true;
+        
+        // Prepare email template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_email: 'abhiswaroop210100@gmail.com'
+        };
+        
+        // Send email using EmailJS
+        emailjs.send('service_j65n72a', 'template_l60gzdt', templateParams)
+            .then(function(response) {
+                showNotification('Thank you for your message! I\'ll get back to you soon.', 'success');
+                contactForm.reset();
+            }, function(error) {
+                showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
+                console.error('EmailJS Error:', error);
+            })
+            .finally(function() {
+                // Reset button state
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
     });
+}
+
+// Notification system for form feedback
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        hideNotification(notification);
+    }, 5000);
+    
+    // Close button functionality
+    const closeButton = notification.querySelector('.notification-close');
+    closeButton.addEventListener('click', () => {
+        hideNotification(notification);
+    });
+}
+
+function hideNotification(notification) {
+    notification.classList.remove('show');
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 300);
 }
 
 // Animate elements on scroll
