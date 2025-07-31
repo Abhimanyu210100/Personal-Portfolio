@@ -184,9 +184,15 @@ securityManager.getSecurityStatus().isDevelopment;
 
 ### **Development Mode Options:**
 1. **Localhost**: Security automatically disabled on `localhost` or `127.0.0.1`
-2. **URL Parameter**: Add `?dev=true` to URL to enable development mode
-3. **LocalStorage**: Set `devMode=true` in localStorage
-4. **Manual Control**: Use the methods above to toggle security
+2. **Mobile Devices**: Security automatically disabled on mobile devices
+3. **URL Parameter**: Add `?dev=true` to URL to enable development mode
+4. **LocalStorage**: Set `devMode=true` in localStorage
+5. **Manual Control**: Use the methods above to toggle security
+
+### **Mobile Device Support:**
+- Security measures are automatically disabled on mobile devices
+- Prevents false positives from mobile browser behaviors
+- Mobile detection includes: Android, iOS, touch devices, small screens
 
 ### **Best Practices:**
 - Never commit API keys to the repository

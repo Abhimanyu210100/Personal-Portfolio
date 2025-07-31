@@ -48,7 +48,9 @@ class SecurityManager {
         const hasDevFlag = window.location.search.includes('dev=true') ||
                           localStorage.getItem('devMode') === 'true';
         
-        return isLocalhost || hasDevFlag;
+        const isMobile = this.isMobileDevice();
+        
+        return isLocalhost || hasDevFlag || isMobile;
     }
 
     handleKeyDown(e) {
@@ -84,6 +86,12 @@ class SecurityManager {
     }
 
     disableDevTools() {
+        // Skip dev tools detection on mobile devices
+        if (this.isMobileDevice()) {
+            console.log('📱 Mobile device detected - skipping dev tools detection');
+            return;
+        }
+        
         // Detect if dev tools are open
         const devtools = {
             open: false,
@@ -105,6 +113,18 @@ class SecurityManager {
                 devtools.open = false;
             }
         }, 500);
+    }
+    
+    isMobileDevice() {
+        // Check for mobile devices
+        const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+        const isMobile = mobileRegex.test(navigator.userAgent);
+        
+        // Additional checks for mobile characteristics
+        const isTouchDevice = 'ontouchstart' in window;
+        const isSmallScreen = window.innerWidth <= 768;
+        
+        return isMobile || isTouchDevice || isSmallScreen;
     }
 
     handleDevToolsOpen() {
@@ -205,7 +225,7 @@ class SecurityManager {
         `;
         warning.innerHTML = `
             <h3>⚠️ Security Warning</h3>
-            <p>Developer tools detected. Sensitive data has been cleared for security.</p>
+            <p>Developer tools detected. Sensitive data has been cleared for security. Chat has been disabled.</p>
             <button onclick="this.parentElement.remove()" style="
                 background: white;
                 color: #dc2626;
@@ -238,13 +258,15 @@ class SecurityManager {
 
     // Method to check security status
     getSecurityStatus() {
+        const isMobile = this.isMobileDevice();
         return {
             isDevelopment: this.isDevelopment,
+            isMobile: isMobile,
             devToolsDetected: false, // Will be updated by detection logic
-            apiKeysProtected: !this.isDevelopment,
-            consoleObfuscated: !this.isDevelopment,
-            rightClickDisabled: !this.isDevelopment,
-            textSelectionDisabled: !this.isDevelopment
+            apiKeysProtected: !this.isDevelopment && !isMobile,
+            consoleObfuscated: !this.isDevelopment && !isMobile,
+            rightClickDisabled: !this.isDevelopment && !isMobile,
+            textSelectionDisabled: !this.isDevelopment && !isMobile
         };
     }
     
