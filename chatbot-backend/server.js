@@ -62,8 +62,6 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // API Key Management
 const apiKeys = {
-    openai: process.env.OPENAI_API_KEY,
-    anthropic: process.env.ANTHROPIC_API_KEY,
     google: process.env.GOOGLE_API_KEY,
     cohere: process.env.COHERE_API_KEY,
     emailjs: process.env.EMAILJS_API_KEY
@@ -157,38 +155,6 @@ async function makeLLMRequest(provider, options) {
     }
     
     const configs = {
-        openai: {
-            url: 'https://api.openai.com/v1/chat/completions',
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            },
-            body: {
-                model: options.model || 'gpt-3.5-turbo',
-                messages: [
-                    { role: 'system', content: 'You are a helpful assistant.' },
-                    { role: 'user', content: options.message }
-                ],
-                max_tokens: options.maxTokens,
-                temperature: options.temperature
-            }
-        },
-        anthropic: {
-            url: 'https://api.anthropic.com/v1/messages',
-            headers: {
-                'x-api-key': apiKey,
-                'Content-Type': 'application/json',
-                'anthropic-version': '2023-06-01'
-            },
-            body: {
-                model: options.model || 'claude-3-haiku-20240307',
-                max_tokens: options.maxTokens,
-                temperature: options.temperature,
-                messages: [
-                    { role: 'user', content: options.message }
-                ]
-            }
-        },
         google: {
             url: `https://generativelanguage.googleapis.com/v1beta/models/${options.model || 'gemini-1.5-flash'}:generateContent?key=${apiKey}`,
             headers: {

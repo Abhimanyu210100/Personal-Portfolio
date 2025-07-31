@@ -27,11 +27,9 @@ Railway offers a free tier and is very easy to use.
      PORT=3001
      NODE_ENV=production
      JWT_SECRET=your-super-secret-jwt-key
-     OPENAI_API_KEY=sk-your-openai-key
-     ANTHROPIC_API_KEY=sk-ant-your-anthropic-key
-     GOOGLE_API_KEY=your-google-key
-     COHERE_API_KEY=your-cohere-key
-     EMAILJS_API_KEY=your-emailjs-key
+           GOOGLE_API_KEY=your-google-key
+      COHERE_API_KEY=your-cohere-key
+      EMAILJS_API_KEY=your-emailjs-key
      RATE_LIMIT_WINDOW_MS=900000
      RATE_LIMIT_MAX_REQUESTS=100
      ALLOWED_ORIGINS=https://yourdomain.com,http://localhost:3000
@@ -95,11 +93,9 @@ Railway offers a free tier and is very easy to use.
    ```bash
    heroku config:set NODE_ENV=production
    heroku config:set JWT_SECRET=your-super-secret-jwt-key
-   heroku config:set OPENAI_API_KEY=sk-your-openai-key
-   heroku config:set ANTHROPIC_API_KEY=sk-ant-your-anthropic-key
    heroku config:set GOOGLE_API_KEY=your-google-key
-   heroku config:set COHERE_API_KEY=your-cohere-key
-   heroku config:set EMAILJS_API_KEY=your-emailjs-key
+heroku config:set COHERE_API_KEY=your-cohere-key
+heroku config:set EMAILJS_API_KEY=your-emailjs-key
    heroku config:set RATE_LIMIT_WINDOW_MS=900000
    heroku config:set RATE_LIMIT_MAX_REQUESTS=100
    heroku config:set ALLOWED_ORIGINS=https://yourdomain.com,http://localhost:3000
@@ -237,7 +233,7 @@ curl https://your-backend-url/api/providers
 
 ### 3. Test LLM Request
 ```bash
-curl -X POST https://your-backend-url/api/llm/openai \
+curl -X POST https://your-backend-url/api/llm/google \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello, test message", "maxTokens": 50}'
 ```

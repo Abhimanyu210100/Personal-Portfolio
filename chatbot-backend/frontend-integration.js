@@ -4,7 +4,7 @@
 class SecureLLMService {
     constructor(backendUrl = 'http://localhost:3001') {
         this.backendUrl = backendUrl;
-        this.providers = ['openai', 'anthropic', 'google', 'cohere'];
+        this.providers = ['google', 'cohere'];
     }
 
     // Check which providers are available
@@ -75,7 +75,7 @@ const llmService = new SecureLLMService();
 
 // Single provider request
 try {
-    const response = await llmService.makeRequest('openai', 'Hello, how are you?');
+    const response = await llmService.makeRequest('google', 'Hello, how are you?');
     console.log('Response:', response);
 } catch (error) {
     console.error('Request failed:', error);
@@ -121,12 +121,6 @@ Speak about him using he/his/him. Include specific examples to justify points. K
             // Extract the actual response text based on provider
             let responseText = '';
             switch (response.provider) {
-                case 'openai':
-                    responseText = response.data.choices[0].message.content;
-                    break;
-                case 'anthropic':
-                    responseText = response.data.content[0].text;
-                    break;
                 case 'google':
                     responseText = response.data.candidates[0].content.parts[0].text;
                     break;

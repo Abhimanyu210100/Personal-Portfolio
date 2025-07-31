@@ -715,8 +715,8 @@ class Chatbot {
         
         statsMessage += "**To configure API keys:**\n";
         statsMessage += "1. Open browser console (F12)\n";
-        statsMessage += "2. Run: chatbot.llmConfig.updateApiKey('openai', 'your-api-key')\n";
-        statsMessage += "3. Available providers: openai, anthropic, google, cohere\n";
+        statsMessage += "2. Run: chatbot.llmConfig.updateApiKey('google', 'your-api-key')\n";
+        statsMessage += "3. Available providers: google, cohere\n";
         
         this.addMessage({
             type: 'bot',
@@ -726,8 +726,8 @@ class Chatbot {
     
     // Method to connect to external LLM APIs
     async connectToLLM(message, apiConfig = {}) {
-        // Example implementation for OpenAI
-        const { apiKey, model = 'gpt-3.5-turbo', endpoint = 'https://api.openai.com/v1/chat/completions' } = apiConfig;
+        // Example implementation for Google Gemini
+        const { apiKey, model = 'gemini-1.5-flash', endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent' } = apiConfig;
         
         if (!apiKey) {
             throw new Error('API key is required');
@@ -789,12 +789,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Example of how to use external LLM (uncomment and configure as needed)
 /*
-// To use OpenAI or other LLM APIs, you can modify the processMessage method:
+// To use Google Gemini or other LLM APIs, you can modify the processMessage method:
 // Replace the generateResponse call with:
 // const response = await this.useExternalLLM(message, {
 //     apiKey: 'your-api-key-here',
-//     model: 'gpt-3.5-turbo',
-//     endpoint: 'https://api.openai.com/v1/chat/completions'
+//     model: 'gemini-1.5-flash',
+//     endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
 // });
 */
 

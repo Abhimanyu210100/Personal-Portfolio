@@ -3,30 +3,6 @@ class LLMConfig {
     constructor() {
         // LLM Providers Configuration
         this.providers = {
-            openai: {
-                name: 'OpenAI',
-                endpoint: 'https://api.openai.com/v1/chat/completions',
-                apiKey: '', // Add your OpenAI API key here
-                model: 'gpt-3.5-turbo',
-                maxTokens: 150,
-                temperature: 0.7,
-                enabled: true,
-                usageLimit: 1000, // Monthly usage limit
-                currentUsage: 0,
-                lastReset: new Date().getMonth()
-            },
-            anthropic: {
-                name: 'Anthropic Claude',
-                endpoint: 'https://api.anthropic.com/v1/messages',
-                apiKey: '', // Add your Anthropic API key here
-                model: 'claude-3-haiku-20240307',
-                maxTokens: 150,
-                temperature: 0.7,
-                enabled: true,
-                usageLimit: 1000,
-                currentUsage: 0,
-                lastReset: new Date().getMonth()
-            },
             google: {
                 name: 'Google Gemini',
                 endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
@@ -124,7 +100,7 @@ Speak about him using he/his/him. Include specific examples to justify points. K
                     config.lastReset = currentDay;
                 }
             } 
-            // OpenAI and Anthropic reset monthly (paid tiers)
+            // Google and Cohere reset monthly (free tiers)
             else {
                 if (config.lastReset !== currentMonth) {
                     config.currentUsage = 0;

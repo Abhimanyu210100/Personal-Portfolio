@@ -34,11 +34,9 @@ npm install
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
    
    # API Keys - Add your actual API keys here
-   OPENAI_API_KEY=sk-your-openai-api-key-here
-   ANTHROPIC_API_KEY=sk-ant-your-anthropic-api-key-here
    GOOGLE_API_KEY=your-google-api-key-here
-   COHERE_API_KEY=your-cohere-api-key-here
-   EMAILJS_API_KEY=your-emailjs-api-key-here
+COHERE_API_KEY=your-cohere-api-key-here
+EMAILJS_API_KEY=your-emailjs-api-key-here
    
    # Rate Limiting
    RATE_LIMIT_WINDOW_MS=900000
@@ -59,7 +57,7 @@ npm install
    ```
    🔒 Secure API Backend running on port 3001
    🌍 Environment: development
-   🔑 Configured providers: openai, anthropic, google, cohere
+   🔑 Configured providers: google, cohere
    📝 Health check: http://localhost:3001/api/health
    📝 Available providers: http://localhost:3001/api/providers
    ```
@@ -85,9 +83,9 @@ You can test the endpoints manually:
 
 3. **Test LLM Request:**
    ```bash
-   curl -X POST http://localhost:3001/api/llm/openai \
-     -H "Content-Type: application/json" \
-     -d '{"message": "Hello, test message", "maxTokens": 50}'
+   curl -X POST http://localhost:3001/api/llm/google \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello, test message", "maxTokens": 50}'
    ```
 
 ## 🔄 Step 5: Update Your Frontend
@@ -120,24 +118,18 @@ Now you need to update your frontend to use the secure backend instead of storin
                    }
                );
                
-               // Extract response text based on provider
-               let responseText = '';
-               switch (response.provider) {
-                   case 'openai':
-                       responseText = response.data.choices[0].message.content;
-                       break;
-                   case 'anthropic':
-                       responseText = response.data.content[0].text;
-                       break;
-                   case 'google':
-                       responseText = response.data.candidates[0].content.parts[0].text;
-                       break;
-                   case 'cohere':
-                       responseText = response.data.generations[0].text;
-                       break;
-                   default:
-                       responseText = 'Response received but format unknown';
-               }
+                               // Extract response text based on provider
+                let responseText = '';
+                switch (response.provider) {
+                    case 'google':
+                        responseText = response.data.candidates[0].content.parts[0].text;
+                        break;
+                    case 'cohere':
+                        responseText = response.data.generations[0].text;
+                        break;
+                    default:
+                        responseText = 'Response received but format unknown';
+                }
                
                return {
                    success: true,
@@ -160,7 +152,7 @@ Update your existing code to make requests through the backend:
 
 ```javascript
 // Instead of making direct API calls, use the backend
-async function makeSecureRequest(message, provider = 'openai') {
+async function makeSecureRequest(message, provider = 'google') {
     try {
         const response = await fetch('http://localhost:3001/api/llm/' + provider, {
             method: 'POST',

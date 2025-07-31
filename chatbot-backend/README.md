@@ -39,8 +39,6 @@ NODE_ENV=development
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 
 # API Keys - Add your actual API keys here
-OPENAI_API_KEY=sk-your-openai-api-key-here
-ANTHROPIC_API_KEY=sk-ant-your-anthropic-api-key-here
 GOOGLE_API_KEY=your-google-api-key-here
 COHERE_API_KEY=your-cohere-api-key-here
 EMAILJS_API_KEY=your-emailjs-api-key-here
@@ -108,9 +106,9 @@ Update your frontend to use the backend instead of storing API keys locally:
 ### Before (Insecure):
 ```javascript
 // Don't do this in production!
-const apiKey = 'sk-your-api-key-here';
-const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  headers: { 'Authorization': `Bearer ${apiKey}` },
+const apiKey = 'your-google-api-key-here';
+const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
+  headers: { 'Content-Type': 'application/json' },
   // ...
 });
 ```
@@ -118,7 +116,7 @@ const response = await fetch('https://api.openai.com/v1/chat/completions', {
 ### After (Secure):
 ```javascript
 // Make requests through your secure backend
-const response = await fetch('http://localhost:3001/api/llm/openai', {
+const response = await fetch('http://localhost:3001/api/llm/google', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
