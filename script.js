@@ -922,6 +922,12 @@ class FloatingDots {
 
 // Initialize floating dots when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize floating dots
+    const floatingDots = new FloatingDots();
+    
+    // Store reference for cleanup if needed
+    window.floatingDots = floatingDots;
+    
     // Prevent multiple initializations
     if (window.chatbot) {
         console.log('Chatbot already initialized, skipping');
@@ -932,11 +938,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.chatbot = new Chatbot();
     console.log('Chatbot initialized');
     
-    // Initialize floating dots
-    const floatingDots = new FloatingDots();
-    
-    // Store reference for cleanup if needed
-    window.floatingDots = floatingDots;
     
     // Handle profile image loading
     const profileImage = document.getElementById('profileImage');
