@@ -1063,7 +1063,7 @@ section {
 
 .message-content p {
     margin: 0;
-    text-align: justify;
+    text-align: left;
 }
 
 /* Chat Input */
