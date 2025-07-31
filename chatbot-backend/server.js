@@ -27,7 +27,7 @@ app.use(helmet({
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',') 
-    : ['http://localhost:3000', 'http://localhost:5500', 'http://localhost:8080', 'http://127.0.0.1:5500', 'http://127.0.0.1:3000', 'http://127.0.0.1:8080'];
+    : ['http://localhost:3000', 'http://localhost:5500', 'http://localhost:8080', 'http://127.0.0.1:5500', 'http://127.0.0.1:3000', 'http://127.0.0.1:8080', 'https://abhimanyu210100.github.io'];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -36,6 +36,11 @@ app.use(cors({
         
         // Allow localhost and 127.0.0.1 for development
         if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:') || origin.startsWith('https://localhost:')) {
+            return callback(null, true);
+        }
+        
+        // Allow GitHub Pages domain
+        if (origin === 'https://abhimanyu210100.github.io') {
             return callback(null, true);
         }
         
