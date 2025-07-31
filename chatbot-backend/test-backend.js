@@ -43,29 +43,34 @@ async function testBackend() {
         }
         console.log('');
 
-        // Test 4: Test LLM Request (if any provider is configured)
+        // Test 4: Test LLM Requests for all configured providers
         if (configuredProviders.length > 0) {
-            console.log('4. Testing LLM Request...');
-            const testProvider = configuredProviders[0].name;
-            const llmResponse = await fetch(`${BASE_URL}/api/llm/${testProvider}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Hello, this is a test message. Please respond with "Test successful!"',
-                    maxTokens: 50,
-                    temperature: 0.7
-                })
-            });
+            console.log('4. Testing LLM Requests...');
+            
+            for (const provider of configuredProviders) {
+                if (provider.name === 'emailjs') continue; // Skip emailjs as it's not an LLM provider
+                
+                console.log(`   Testing ${provider.name}...`);
+                const llmResponse = await fetch(`${BASE_URL}/api/llm/${provider.name}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello, this is a test message. Please respond with "Test successful!"',
+                        maxTokens: 50,
+                        temperature: 0.7
+                    })
+                });
 
-            if (llmResponse.ok) {
-                const llmData = await llmResponse.json();
-                console.log(`✅ LLM Request to ${testProvider} successful!`);
-                console.log(`   Response received: ${llmData.success ? 'Yes' : 'No'}`);
-            } else {
-                const errorData = await llmResponse.json();
-                console.log(`❌ LLM Request failed: ${errorData.error}`);
+                if (llmResponse.ok) {
+                    const llmData = await llmResponse.json();
+                    console.log(`   ✅ ${provider.name}: Success!`);
+                    console.log(`      Response: ${llmData.success ? 'Yes' : 'No'}`);
+                } else {
+                    const errorData = await llmResponse.json();
+                    console.log(`   ❌ ${provider.name}: Failed - ${errorData.error}`);
+                }
             }
         } else {
             console.log('4. Skipping LLM Test (no providers configured)');

@@ -179,7 +179,7 @@ async function makeLLMRequest(provider, options) {
                 'Content-Type': 'application/json'
             },
             body: {
-                model: options.model || 'command',
+                model: 'command-light',
                 prompt: options.message,
                 max_tokens: options.maxTokens,
                 temperature: options.temperature

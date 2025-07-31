@@ -19,7 +19,7 @@ class LLMConfig {
                 name: 'Cohere',
                 endpoint: 'https://api.cohere.ai/v1/generate',
                 apiKey: '', // Add your Cohere API key here
-                model: 'command',
+                model: 'command-light',
                 maxTokens: 150,
                 temperature: 0.7,
                 enabled: true,
