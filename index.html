@@ -60,8 +60,11 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="profile-placeholder">
-                    <i class="fas fa-user-tie"></i>
+                <div class="profile-container">
+                    <img src="profile-image.jpg" alt="Abhimanyu" class="profile-image" id="profileImage" onload="setTimeout(() => this.classList.add('loaded'), 200)" onerror="console.log('Image error:', this.src)">
+                    <div class="profile-placeholder" id="profilePlaceholder">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
                 </div>
             </div>
         </div>

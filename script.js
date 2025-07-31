@@ -228,7 +228,9 @@ function typeWriterDual(staticEl, highlightEl, staticText, highlightText, speed 
 document.addEventListener("DOMContentLoaded", () => {
     const staticEl = document.getElementById('static-text');
     const highlightEl = document.getElementById('highlighted-text');
-    typeWriterDual(staticEl, highlightEl, "Hi, I'm ", "Abhimanyu");
+    setTimeout(() => {
+        typeWriterDual(staticEl, highlightEl, "Hi, I'm ", "Abhimanyu");
+    }, 650)
 });
 
 // Add loading animation
@@ -795,4 +797,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Store reference for cleanup if needed
     window.floatingDots = floatingDots;
+    
+    // Handle profile image loading
+    const profileImage = document.getElementById('profileImage');
+    const profilePlaceholder = document.getElementById('profilePlaceholder');
+    
+    if (profileImage) {
+        // Check if image is already loaded
+        if (profileImage.complete && profileImage.naturalHeight !== 0) {
+            profileImage.classList.add('loaded');
+        } else {
+            profileImage.addEventListener('load', function() {
+                this.classList.add('loaded');
+                console.log('Profile image loaded successfully');
+            });
+            
+            profileImage.addEventListener('error', function() {
+                console.log('Profile image failed to load, showing placeholder');
+                // Keep placeholder visible
+            });
+        }
+        
+        // Fallback: Force show image after 1 second if not loaded
+        setTimeout(() => {
+            if (!profileImage.classList.contains('loaded')) {
+                profileImage.classList.add('loaded');
+                console.log('Forced profile image to show');
+            }
+        }, 1000);
+        
+        // Add a slight delay to make the fade-in more noticeable
+        setTimeout(() => {
+            if (profileImage.classList.contains('loaded')) {
+                profileImage.style.transition = 'opacity 0.8s ease';
+            }
+        }, 100);
+    }
 }); 
