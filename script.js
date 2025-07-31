@@ -386,6 +386,7 @@ class Chatbot {
         this.isOpen = false;
         this.messages = [];
         this.isTyping = false;
+        this.welcomeMessageAdded = false;
         
         // DOM elements
         this.chatButton = document.getElementById('chatButton');
@@ -396,8 +397,12 @@ class Chatbot {
         this.chatInput = document.getElementById('chatInput');
         this.sendButton = document.querySelector('.send-button');
         
+        // Clear any existing messages to start fresh
+        if (this.chatMessages) {
+            this.chatMessages.innerHTML = '';
+        }
+        
         this.initializeEventListeners();
-        this.addWelcomeMessage();
     }
     
     initializeEventListeners() {
@@ -438,9 +443,16 @@ class Chatbot {
     }
     
     openChatInterface() {
+        console.log('Opening chat interface, welcome message added:', this.welcomeMessageAdded);
         this.isOpen = true;
         this.chatInterface.classList.add('active');
         this.chatInput.focus();
+        
+        // Add welcome message only once when chat is first opened
+        if (!this.welcomeMessageAdded) {
+            this.addWelcomeMessage();
+            this.welcomeMessageAdded = true;
+        }
     }
     
     closeChatInterface() {
@@ -449,11 +461,13 @@ class Chatbot {
     }
     
     addWelcomeMessage() {
+        console.log('Adding welcome message, current messages count:', this.messages.length);
         const welcomeMessage = {
             type: 'bot',
             content: "Hi! I'm Abhimanyu's AI assistant. How can I help you today? You can ask me about my experience, skills, projects, or anything else!"
         };
         this.addMessage(welcomeMessage);
+        console.log('Welcome message added, total messages:', this.messages.length);
     }
     
     handleUserMessage() {
@@ -540,6 +554,27 @@ class Chatbot {
     }
     
     addMessage(message) {
+        // Prevent duplicate messages by checking if the same content was just added
+        if (this.messages.length > 0) {
+            const lastMessage = this.messages[this.messages.length - 1];
+            if (lastMessage.content === message.content && lastMessage.type === message.type) {
+                console.log('Duplicate message detected, skipping:', message.content);
+                return; // Skip duplicate message
+            }
+        }
+        
+        // Additional check for welcome message duplicates
+        if (message.type === 'bot' && message.content.includes("Hi! I'm Abhimanyu's AI assistant")) {
+            const existingWelcome = this.messages.find(msg => 
+                msg.type === 'bot' && msg.content.includes("Hi! I'm Abhimanyu's AI assistant")
+            );
+            if (existingWelcome) {
+                console.log('Welcome message already exists, skipping');
+                return;
+            }
+        }
+        
+        console.log('Adding message:', message.content);
         this.messages.push(message);
         
         const messageElement = document.createElement('div');
@@ -589,6 +624,12 @@ class Chatbot {
     
     scrollToBottom() {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+    
+    clearChat() {
+        this.messages = [];
+        this.chatMessages.innerHTML = '';
+        this.welcomeMessageAdded = false;
     }
     
     // Method to connect to external LLM APIs
@@ -789,8 +830,15 @@ class FloatingDots {
 
 // Initialize floating dots when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Prevent multiple initializations
+    if (window.chatbot) {
+        console.log('Chatbot already initialized, skipping');
+        return;
+    }
+    
     // Initialize existing functionality
     window.chatbot = new Chatbot();
+    console.log('Chatbot initialized');
     
     // Initialize floating dots
     const floatingDots = new FloatingDots();
