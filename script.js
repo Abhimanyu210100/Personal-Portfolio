@@ -745,62 +745,7 @@ class Chatbot {
         }
     }
     
-    // Method to connect to external LLM APIs
-    async connectToLLM(message, apiConfig = {}) {
-        // Example implementation for Google Gemini
-        const { apiKey, model = 'gemini-1.5-flash', endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent' } = apiConfig;
-        
-        if (!apiKey) {
-            throw new Error('API key is required');
-        }
-        
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: model,
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'You are Abhimanyu\'s AI assistant. You help answer questions about his experience in data science, AI, healthcare analytics, and his projects. Be helpful, professional, and concise.'
-                        },
-                        {
-                            role: 'user',
-                            content: message
-                        }
-                    ],
-                    max_tokens: 150,
-                    temperature: 0.7
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`API request failed: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            return data.choices[0].message.content;
-            
-        } catch (error) {
-            console.error('LLM API Error:', error);
-            throw error;
-        }
-    }
-    
-    // Method to use external LLM instead of local responses
-    async useExternalLLM(message, apiConfig) {
-        try {
-            const response = await this.connectToLLM(message, apiConfig);
-            return response;
-        } catch (error) {
-            // Fallback to local responses if API fails
-            return this.generateResponse(message);
-        }
-    }
+
 }
 
 // Initialize chatbot when DOM is loaded
@@ -808,16 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.chatbot = new Chatbot();
 });
 
-// Example of how to use external LLM (uncomment and configure as needed)
-/*
-// To use Google Gemini or other LLM APIs, you can modify the processMessage method:
-// Replace the generateResponse call with:
-// const response = await this.useExternalLLM(message, {
-//     apiKey: 'your-api-key-here',
-//     model: 'gemini-1.5-flash',
-//     endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
-// });
-*/
+
 
 // Floating Dots Animation
 class FloatingDots {

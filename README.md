@@ -74,32 +74,22 @@ python3 -m http.server 8000
 
 3. Open `http://localhost:8000` in your browser
 
-## 🔧 LLM Configuration
+## 🔧 Secure Backend Configuration
 
-### Setting up API Keys:
+### **No API Keys Needed in Frontend!**
 
-1. **Get Free API Keys**:
-   - [Google AI Studio](https://makersuite.google.com/app/apikey) (Free)
-   - [Cohere Console](https://dashboard.cohere.com/) (Free)
-   - [Google AI Studio](https://makersuite.google.com/app/apikey) (Free tier)
+The chatbot now uses a secure backend that handles all API keys. No configuration needed in the frontend.
 
-2. **Configure in Browser Console**:
-```javascript
-// Open browser console (F12) and run:
-chatbot.llmConfig.updateApiKey('google', 'your-google-api-key');
-chatbot.llmConfig.updateApiKey('cohere', 'your-cohere-api-key');
-chatbot.llmConfig.updateApiKey('google', 'your-google-api-key');
-```
+### **Backend Features:**
+- ✅ **Secure API Key Storage** - All keys stored in backend environment variables
+- ✅ **Automatic Provider Selection** - Tries Google Gemini, then Cohere
+- ✅ **Rate Limiting** - Built-in protection against abuse
+- ✅ **CORS Protection** - Secure cross-origin requests
+- ✅ **Error Handling** - Graceful fallback to local responses
 
-3. **API Keys Persistence**:
-   - API keys are automatically saved to browser localStorage
-   - Keys persist across page refreshes and browser sessions
-   - Keys are stored locally and never sent to the server
-   - To clear all keys: `chatbot.llmConfig.clearApiKeys()`
-
-4. **Check Status**:
-   - Type `/stats` in the chat to see provider status
-   - Type `/help` for available commands
+### **Check Status:**
+- Type `/stats` in the chat to see backend provider status
+- Type `/help` for available commands
 
 ## 📁 File Structure
 
@@ -110,8 +100,8 @@ portfolio/
 ├── script.js               # Main JavaScript functionality
 ├── context-data.js         # Personal information database
 ├── context-updater.js      # Helper for updating context
-├── llm-config.js           # LLM configuration and management
-├── llm-service.js          # Multi-LLM service implementation
+├── secure-llm-service.js   # Secure backend integration
+├── chatbot-backend/        # Secure backend (deployed on Vercel)
 ├── DEPLOYMENT.md           # Deployment guide
 └── README.md               # This file
 ```
@@ -124,10 +114,10 @@ portfolio/
 - Modify the system prompt in `llm-config.js`
 - Adjust styling in `styles.css`
 
-### LLM Configuration:
-- Modify provider settings in `llm-config.js`
-- Adjust usage limits and models
-- Customize system prompts
+### Backend Configuration:
+- Backend deployed on Vercel with secure environment variables
+- Automatic provider selection (Google Gemini → Cohere)
+- Built-in rate limiting and CORS protection
 
 ### Context Management:
 - Edit `context-data.js` directly for major changes
@@ -136,66 +126,29 @@ portfolio/
 
 ## 🔒 Security Features
 
-### **API Key Protection:**
-- **Local Storage**: Keys stored securely in browser localStorage
-- **Auto-Clear**: Keys automatically cleared if dev tools are detected
-- **Console Protection**: API keys are redacted from console logs
-- **Pattern Detection**: Automatic detection of API key patterns
+### **Secure Backend Architecture:**
+- **No API Keys in Frontend** - All keys stored securely in backend environment variables
+- **HTTPS Communication** - All requests go through secure HTTPS
+- **Rate Limiting** - Built-in protection against abuse
+- **CORS Protection** - Secure cross-origin request handling
+- **Error Handling** - Graceful fallback to local responses
 
-### **Anti-Theft Measures:**
-- **Dev Tools Detection**: Automatically detects and responds to developer tools
-- **Right-Click Disabled**: Prevents context menu access
-- **Text Selection Disabled**: Prevents copying of sensitive data
-- **Keyboard Shortcuts Blocked**: F12, Ctrl+Shift+I, Ctrl+U disabled
-- **Security Headers**: Meta tags prevent indexing and framing
+### **Backend Security:**
+- **Environment Variables** - API keys stored in Vercel environment variables
+- **Input Validation** - All requests validated before processing
+- **Error Sanitization** - Secure error responses that don't leak sensitive info
+- **Automatic Fallback** - Uses local responses if backend is unavailable
 
-### **Manual Security Controls:**
-```javascript
-// Clear all sensitive data
-securityManager.clearAllSensitiveData();
-
-// Check security status
-securityManager.getSecurityStatus();
-
-// Clear API keys only
-chatbot.llmConfig.clearApiKeys();
-```
-
-### **Development & Debugging:**
-```javascript
-// Enable development mode (disables security)
-securityManager.enableDevelopmentMode();
-
-// Disable development mode (enables security)
-securityManager.disableDevelopmentMode();
-
-// Temporarily disable security for debugging
-securityManager.temporarilyDisableSecurity();
-
-// Re-enable security
-securityManager.reEnableSecurity();
-
-// Check if in development mode
-securityManager.getSecurityStatus().isDevelopment;
-```
-
-### **Development Mode Options:**
-1. **Localhost**: Security automatically disabled on `localhost` or `127.0.0.1`
-2. **Mobile Devices**: Security automatically disabled on mobile devices
-3. **URL Parameter**: Add `?dev=true` to URL to enable development mode
-4. **LocalStorage**: Set `devMode=true` in localStorage
-5. **Manual Control**: Use the methods above to toggle security
-
-### **Mobile Device Support:**
-- Security measures are automatically disabled on mobile devices
-- Prevents false positives from mobile browser behaviors
-- Mobile detection includes: Android, iOS, touch devices, small screens
+### **Frontend Security:**
+- **No Sensitive Data** - Frontend contains no API keys or sensitive information
+- **Secure Communication** - All API calls go through the secure backend
+- **Local Usage Tracking** - Only tracks usage statistics locally
 
 ### **Best Practices:**
-- Never commit API keys to the repository
-- Monitor usage to avoid unexpected charges
-- Use different keys for development and production
-- Regularly rotate API keys
+- All API keys stored securely in backend environment variables
+- No sensitive data in frontend code
+- Automatic fallback to local responses if backend fails
+- Built-in rate limiting and CORS protection
 
 ## 📊 Usage Monitoring
 
