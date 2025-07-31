@@ -468,7 +468,7 @@ class Chatbot {
         console.log('Adding welcome message, current messages count:', this.messages.length);
         const welcomeMessage = {
             type: 'bot',
-            content: "Hi! I'm Abhimanyu's AI assistant. How can I help you today? You can ask me about my experience, skills, projects, or anything else!"
+            content: "Hi! I'm Abhimanyu's AI assistant. How can I help you today? You can ask me about his experience, skills, projects, or anything else!"
         };
         this.addMessage(welcomeMessage);
         console.log('Welcome message added, total messages:', this.messages.length);
