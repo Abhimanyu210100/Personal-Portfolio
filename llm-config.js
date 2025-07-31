@@ -56,6 +56,9 @@ class LLMConfig {
         // Load saved usage data from localStorage
         this.loadUsageData();
         
+        // Load saved API keys from localStorage
+        this.loadApiKeys();
+        
         // System prompt for all LLMs
         this.systemPrompt = `Answer questions about Abhimanyu Swaroop in third person. Keep responses to 1-2 sentences max with specific examples.
 
@@ -166,9 +169,58 @@ Speak about him using he/his/him. Include specific examples to justify points. K
     updateApiKey(provider, apiKey) {
         if (this.providers[provider]) {
             this.providers[provider].apiKey = apiKey;
+            // Save API key to localStorage for persistence
+            this.saveApiKeys();
             return true;
         }
         return false;
+    }
+    
+    // Save API keys to localStorage
+    saveApiKeys() {
+        try {
+            const apiKeys = {};
+            Object.keys(this.providers).forEach(provider => {
+                if (this.providers[provider].apiKey) {
+                    apiKeys[provider] = this.providers[provider].apiKey;
+                }
+            });
+            localStorage.setItem('llmApiKeys', JSON.stringify(apiKeys));
+            console.log('✅ API keys saved to localStorage');
+        } catch (error) {
+            console.error('Error saving API keys:', error);
+        }
+    }
+    
+    // Load API keys from localStorage
+    loadApiKeys() {
+        try {
+            const savedKeys = localStorage.getItem('llmApiKeys');
+            if (savedKeys) {
+                const apiKeys = JSON.parse(savedKeys);
+                Object.keys(apiKeys).forEach(provider => {
+                    if (this.providers[provider]) {
+                        this.providers[provider].apiKey = apiKeys[provider];
+                    }
+                });
+                console.log('✅ API keys loaded from localStorage');
+            }
+        } catch (error) {
+            console.error('Error loading API keys:', error);
+        }
+    }
+    
+    // Clear all API keys (for security)
+    clearApiKeys() {
+        try {
+            Object.keys(this.providers).forEach(provider => {
+                this.providers[provider].apiKey = '';
+            });
+            localStorage.removeItem('llmApiKeys');
+            console.log('✅ API keys cleared from localStorage');
+        } catch (error) {
+            console.error('Error clearing API keys:', error);
+        }
     }
 
     // Enable/disable a provider

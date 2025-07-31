@@ -94,7 +94,13 @@ chatbot.llmConfig.updateApiKey('openai', 'your-openai-api-key');
 chatbot.llmConfig.updateApiKey('anthropic', 'your-anthropic-api-key');
 ```
 
-3. **Check Status**:
+3. **API Keys Persistence**:
+   - API keys are automatically saved to browser localStorage
+   - Keys persist across page refreshes and browser sessions
+   - Keys are stored locally and never sent to the server
+   - To clear all keys: `chatbot.llmConfig.clearApiKeys()`
+
+4. **Check Status**:
    - Type `/stats` in the chat to see provider status
    - Type `/help` for available commands
 
