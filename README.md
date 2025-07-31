@@ -137,13 +137,62 @@ portfolio/
 - Use `contextUpdater` methods for quick updates
 - Save changes with `contextUpdater.saveContext()`
 
-## 🔒 Security Notes
+## 🔒 Security Features
 
-- API keys are stored in browser localStorage
+### **API Key Protection:**
+- **Local Storage**: Keys stored securely in browser localStorage
+- **Auto-Clear**: Keys automatically cleared if dev tools are detected
+- **Console Protection**: API keys are redacted from console logs
+- **Pattern Detection**: Automatic detection of API key patterns
+
+### **Anti-Theft Measures:**
+- **Dev Tools Detection**: Automatically detects and responds to developer tools
+- **Right-Click Disabled**: Prevents context menu access
+- **Text Selection Disabled**: Prevents copying of sensitive data
+- **Keyboard Shortcuts Blocked**: F12, Ctrl+Shift+I, Ctrl+U disabled
+- **Security Headers**: Meta tags prevent indexing and framing
+
+### **Manual Security Controls:**
+```javascript
+// Clear all sensitive data
+securityManager.clearAllSensitiveData();
+
+// Check security status
+securityManager.getSecurityStatus();
+
+// Clear API keys only
+chatbot.llmConfig.clearApiKeys();
+```
+
+### **Development & Debugging:**
+```javascript
+// Enable development mode (disables security)
+securityManager.enableDevelopmentMode();
+
+// Disable development mode (enables security)
+securityManager.disableDevelopmentMode();
+
+// Temporarily disable security for debugging
+securityManager.temporarilyDisableSecurity();
+
+// Re-enable security
+securityManager.reEnableSecurity();
+
+// Check if in development mode
+securityManager.getSecurityStatus().isDevelopment;
+```
+
+### **Development Mode Options:**
+1. **Localhost**: Security automatically disabled on `localhost` or `127.0.0.1`
+2. **URL Parameter**: Add `?dev=true` to URL to enable development mode
+3. **LocalStorage**: Set `devMode=true` in localStorage
+4. **Manual Control**: Use the methods above to toggle security
+
+### **Best Practices:**
 - Never commit API keys to the repository
-- Consider using environment variables for production
 - Monitor usage to avoid unexpected charges
-- Context data is stored locally and can be encrypted if needed
+- Use different keys for development and production
+- Regularly rotate API keys
 
 ## 📊 Usage Monitoring
 
