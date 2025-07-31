@@ -388,9 +388,17 @@ class Chatbot {
         this.isTyping = false;
         this.welcomeMessageAdded = false;
         
-        // Initialize LLM system
-        this.llmConfig = new LLMConfig();
-        this.llmService = new LLMService(this.llmConfig);
+        // Initialize secure LLM system using backend
+        this.secureLLMService = new SecureLLMService();
+        
+        // Test backend connection on initialization
+        this.secureLLMService.testBackendConnection().then(success => {
+            if (success) {
+                console.log('✅ Backend connection established');
+            } else {
+                console.warn('⚠️ Backend connection failed, will use local responses');
+            }
+        });
         
         // DOM elements
         this.chatButton = document.getElementById('chatButton');
@@ -497,7 +505,7 @@ class Chatbot {
     async processMessage(message) {
         try {
             // Check for special commands first
-            const localResponse = this.generateResponse(message);
+            const localResponse = await this.generateResponse(message);
             if (localResponse === null) {
                 // Special command handled by generateResponse (like /stats)
                 this.hideTypingIndicator();
@@ -514,16 +522,16 @@ class Chatbot {
                 return;
             }
             
-            // Get response from LLM service (no conversation history to save tokens and prevent follow-ups)
-            const response = await this.llmService.getResponse(message, []);
+            // Get response from secure LLM service (no conversation history to save tokens and prevent follow-ups)
+            const response = await this.secureLLMService.getResponse(message, []);
             
             // Hide typing indicator
             this.hideTypingIndicator();
             
             // Add bot response with provider info
-            const currentProvider = this.llmService.getCurrentProvider();
+            const currentProvider = this.secureLLMService.getCurrentProvider();
             const responseContent = currentProvider 
-                ? `${response}\n\n*Powered by ${this.llmConfig.getProviderConfig(currentProvider).name}*`
+                ? `${response}\n\n*Powered by ${currentProvider}*`
                 : response;
             
             this.addMessage({
@@ -541,12 +549,12 @@ class Chatbot {
         }
     }
     
-    generateResponse(message) {
+    async generateResponse(message) {
         const lowerMessage = message.toLowerCase();
         
         // Handle special commands
         if (lowerMessage.includes('/stats') || lowerMessage.includes('/usage')) {
-            this.showUsageStats();
+            await this.showUsageStats();
             return null; // Response will be handled by showUsageStats
         }
         
@@ -695,33 +703,46 @@ class Chatbot {
     }
     
     // Display LLM usage statistics
-    showUsageStats() {
-        const stats = this.llmService.getUsageStats();
-        let statsMessage = "**LLM Provider Status:**\n\n";
-        
-        Object.keys(stats).forEach(provider => {
-            const stat = stats[provider];
-            const status = stat.enabled && stat.hasApiKey ? 
-                (stat.remaining > 0 ? '✅ Available' : '❌ Usage Limit Reached') : 
-                '❌ Not Configured';
+    async showUsageStats() {
+        try {
+            // Get backend provider status
+            const providers = await this.secureLLMService.getAvailableProviders();
+            const localStats = this.secureLLMService.getUsageStats();
             
-            statsMessage += `${stat.name}: ${status}\n`;
-            if (stat.enabled && stat.hasApiKey) {
-                const timePeriod = (provider === 'google' || provider === 'cohere') ? 'day' : 'month';
-                statsMessage += `  Usage: ${stat.currentUsage}/${stat.usageLimit} (${stat.percentage}%) per ${timePeriod}\n`;
+            let statsMessage = "**Secure Backend LLM Status:**\n\n";
+            
+            if (providers.length > 0) {
+                statsMessage += "**Backend Providers:**\n";
+                providers.forEach(provider => {
+                    statsMessage += `✅ ${provider.name}: Available\n`;
+                });
+                statsMessage += "\n";
+            } else {
+                statsMessage += "❌ No backend providers available\n\n";
             }
-            statsMessage += '\n';
-        });
-        
-        statsMessage += "**To configure API keys:**\n";
-        statsMessage += "1. Open browser console (F12)\n";
-        statsMessage += "2. Run: chatbot.llmConfig.updateApiKey('google', 'your-api-key')\n";
-        statsMessage += "3. Available providers: google, cohere\n";
-        
-        this.addMessage({
-            type: 'bot',
-            content: statsMessage
-        });
+            
+            statsMessage += "**Local Usage Tracking:**\n";
+            Object.keys(localStats).forEach(provider => {
+                const stat = localStats[provider];
+                statsMessage += `${provider}: ${stat.currentUsage} requests today\n`;
+            });
+            
+            statsMessage += "\n**Backend URL:**\n";
+            statsMessage += `${this.secureLLMService.backendUrl}\n\n`;
+            
+            statsMessage += "**Status:** ✅ Using secure backend (no API keys in frontend)";
+            
+            this.addMessage({
+                type: 'bot',
+                content: statsMessage
+            });
+        } catch (error) {
+            console.error('Error getting usage stats:', error);
+            this.addMessage({
+                type: 'bot',
+                content: "❌ Error getting usage stats. Backend may be unavailable."
+            });
+        }
     }
     
     // Method to connect to external LLM APIs
