@@ -651,9 +651,6 @@ class Chatbot {
                 element.textContent += text.charAt(i);
                 i++;
                 setTimeout(typeWriter, speed);
-            } else {
-                // Remove cursor animation when typing is complete
-                element.style.borderRight = 'none';
             }
         };
         typeWriter();

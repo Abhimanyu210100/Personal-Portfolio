@@ -1067,14 +1067,8 @@ section {
 }
 
 /* Typewriter effect for bot messages */
-.bot-message .message-content p {
-    border-right: 2px solid #2563eb;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0%, 50% { border-color: #2563eb; }
-    51%, 100% { border-color: transparent; }
+.bot-message .message-content p.typing {
+    /* No cursor - just clean typewriter effect */
 }
 
 /* Chat Input */
