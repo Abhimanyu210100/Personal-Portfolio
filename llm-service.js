@@ -194,34 +194,34 @@ class LLMService {
         const lowerMessage = message.toLowerCase();
         
         if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
-            return "I have over 5 years of experience in data science and AI. I currently work at CVS Health as a Data Scientist, where I've led end-to-end development of pipelines and applied GenAI to healthcare problems. I've also worked at DIA Ventures and completed projects at Columbia University.";
+            return "Abhimanyu is a Data Scientist at CVS Health with 5+ years experience, having saved $9.6M through healthcare claims optimization and earned a Premier Award.";
         }
         
         if (lowerMessage.includes('skill') || lowerMessage.includes('technology')) {
-            return "My technical skills include Python, R, SQL, machine learning (TensorFlow, PyTorch), big data technologies (AWS, Spark, Hadoop), and healthcare analytics. I specialize in generative AI, large language models, and building scalable data systems.";
+            return "His skills include Python, SQL, machine learning, and big data technologies, demonstrated through his pipeline development work at CVS Health.";
         }
         
         if (lowerMessage.includes('project') || lowerMessage.includes('achievement')) {
-            return "One of my major achievements was leading a 0-1 pipeline development that enabled a new business unit at CVS Health, earning a Premier Award. I've also worked on GenAI applications for healthcare document understanding and code generation.";
+            return "He saved $9.6M through healthcare claims optimization and earned a Premier Award for building end-to-end data pipelines.";
         }
         
         if (lowerMessage.includes('education') || lowerMessage.includes('degree')) {
-            return "I hold a Master's in Data Science from Columbia University and a Bachelor's in Engineering Materials Science from IIT Madras. My education focused on applied analytics and machine learning.";
+            return "He has a Master's in Data Science from Columbia University and a Bachelor's from IIT Madras, with research published in Computational Materials Science.";
         }
         
         if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('linkedin')) {
-            return "You can reach me through the contact form on this page, or connect with me on LinkedIn. I'm always open to discussing data science, AI, and healthcare technology opportunities.";
+            return "You can reach him through the contact form or LinkedIn for data science and healthcare technology opportunities.";
         }
         
         if (lowerMessage.includes('healthcare') || lowerMessage.includes('cvs')) {
-            return "At CVS Health, I work on healthcare analytics, applying data science to improve patient outcomes and operational efficiency. My work includes claims analysis, risk modeling, and implementing AI solutions for healthcare challenges.";
+            return "At CVS Health, he works on healthcare analytics and AI solutions, including claims analysis and risk modeling.";
         }
         
         if (lowerMessage.includes('ai') || lowerMessage.includes('genai') || lowerMessage.includes('llm')) {
-            return "I specialize in generative AI and large language models. I've applied these technologies to understand complex healthcare documents, generate production code, and create intelligent systems that reduce reliance on domain experts.";
+            return "He specializes in GenAI and large language models, applying them to auto-generate SQL/Python from healthcare documents.";
         }
         
-        return "That's an interesting question! I'm Abhimanyu's AI assistant, and I can help you learn more about his experience in data science, AI, healthcare analytics, and his projects. What would you like to know?";
+        return "I can provide insights about Abhimanyu's data science and healthcare analytics background with specific examples from his work.";
     }
 
     // Get current provider info

@@ -98,4 +98,5 @@ keys/
 # Images
 *.jpg
 
-DEPLOYMENT.md
+# Helper files
+helper_md/
