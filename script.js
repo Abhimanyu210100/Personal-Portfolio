@@ -200,30 +200,35 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Typing effect for hero title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
+function typeWriterDual(staticEl, highlightEl, staticText, highlightText, speed = 100) {
+    let i = 0, j = 0;
+
+    function typeStatic() {
+        if (i < staticText.length) {
+            staticEl.innerHTML += staticText.charAt(i);
             i++;
-            setTimeout(type, speed);
+            setTimeout(typeStatic, speed);
+        } else {
+            typeHighlight(); // Once static part is done, start typing highlight
         }
     }
-    
-    type();
+
+    function typeHighlight() {
+        if (j < highlightText.length) {
+            highlightEl.innerHTML += highlightText.charAt(j);
+            j++;
+            setTimeout(typeHighlight, speed);
+        }
+    }
+
+    typeStatic();
 }
 
 // Initialize typing effect when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.innerHTML;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 50);
-        }, 500);
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    const staticEl = document.getElementById('static-text');
+    const highlightEl = document.getElementById('highlighted-text');
+    typeWriterDual(staticEl, highlightEl, "Hi, I'm ", "Abhimanyu");
 });
 
 // Add loading animation
