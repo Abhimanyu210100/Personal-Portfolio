@@ -179,8 +179,7 @@ class SecurityManager {
     containsApiKey(text) {
         // Check for common API key patterns
         const apiKeyPatterns = [
-            /sk-[a-zA-Z0-9]{32,}/, // OpenAI
-            /sk-ant-[a-zA-Z0-9]{32,}/, // Anthropic
+                    /AIza[a-zA-Z0-9]{35}/, // Google API
             /AIza[a-zA-Z0-9_-]{35}/, // Google
             /[a-zA-Z0-9]{40}/ // Cohere
         ];

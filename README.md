@@ -4,7 +4,7 @@ A modern, interactive portfolio website featuring a multi-LLM powered chatbot wi
 
 ## 🌟 Features
 
-- **Interactive Chatbot**: Powered by multiple LLM providers (OpenAI, Anthropic, Google, Cohere)
+- **Interactive Chatbot**: Powered by multiple LLM providers (Google Gemini, Cohere)
 - **Comprehensive Context System**: Detailed personal information database for accurate responses
 - **Responsive Design**: Works seamlessly on all devices
 - **Modern UI**: Clean, professional design with smooth animations
@@ -25,8 +25,7 @@ The portfolio includes an intelligent chatbot that can answer questions about:
 ### LLM Providers Supported:
 - **Google Gemini** (Free tier: 1500 requests/day)
 - **Cohere** (Free tier: 100 requests/day)
-- **OpenAI GPT-3.5** ($5 free credit)
-- **Anthropic Claude** ($5 free credit)
+- **Google Gemini** (Free tier available)
 
 ## 📋 Context System
 
@@ -82,16 +81,14 @@ python3 -m http.server 8000
 1. **Get Free API Keys**:
    - [Google AI Studio](https://makersuite.google.com/app/apikey) (Free)
    - [Cohere Console](https://dashboard.cohere.com/) (Free)
-   - [OpenAI Platform](https://platform.openai.com/) ($5 credit)
-   - [Anthropic Console](https://console.anthropic.com/) ($5 credit)
+   - [Google AI Studio](https://makersuite.google.com/app/apikey) (Free tier)
 
 2. **Configure in Browser Console**:
 ```javascript
 // Open browser console (F12) and run:
 chatbot.llmConfig.updateApiKey('google', 'your-google-api-key');
 chatbot.llmConfig.updateApiKey('cohere', 'your-cohere-api-key');
-chatbot.llmConfig.updateApiKey('openai', 'your-openai-api-key');
-chatbot.llmConfig.updateApiKey('anthropic', 'your-anthropic-api-key');
+chatbot.llmConfig.updateApiKey('google', 'your-google-api-key');
 ```
 
 3. **API Keys Persistence**:

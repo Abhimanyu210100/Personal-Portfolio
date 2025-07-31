@@ -41,10 +41,6 @@ class LLMService {
         }
 
         switch (provider) {
-            case 'openai':
-                return await this.callOpenAI(config, message, conversationHistory);
-            case 'anthropic':
-                return await this.callAnthropic(config, message, conversationHistory);
             case 'google':
                 return await this.callGoogle(config, message, conversationHistory);
             case 'cohere':
@@ -54,64 +50,7 @@ class LLMService {
         }
     }
 
-    // OpenAI API call
-    async callOpenAI(config, message, conversationHistory) {
-        const messages = [
-            { role: 'system', content: this.config.systemPrompt },
-            ...conversationHistory,
-            { role: 'user', content: message }
-        ];
 
-        const response = await fetch(config.endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.apiKey}`
-            },
-            body: JSON.stringify({
-                model: config.model,
-                messages: messages,
-                max_tokens: config.maxTokens,
-                temperature: config.temperature
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.choices[0].message.content;
-    }
-
-    // Anthropic Claude API call
-    async callAnthropic(config, message, conversationHistory) {
-        const messages = [
-            { role: 'user', content: this.config.systemPrompt + '\n\n' + message }
-        ];
-
-        const response = await fetch(config.endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': config.apiKey,
-                'anthropic-version': '2023-06-01'
-            },
-            body: JSON.stringify({
-                model: config.model,
-                messages: messages,
-                max_tokens: config.maxTokens,
-                temperature: config.temperature
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Anthropic API error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.content[0].text;
-    }
 
     // Google Gemini API call
     async callGoogle(config, message, conversationHistory) {
