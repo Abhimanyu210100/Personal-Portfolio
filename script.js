@@ -388,6 +388,10 @@ class Chatbot {
         this.isTyping = false;
         this.welcomeMessageAdded = false;
         
+        // Initialize LLM system
+        this.llmConfig = new LLMConfig();
+        this.llmService = new LLMService(this.llmConfig);
+        
         // DOM elements
         this.chatButton = document.getElementById('chatButton');
         this.chatInterface = document.getElementById('chatInterface');
@@ -492,19 +496,48 @@ class Chatbot {
     
     async processMessage(message) {
         try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Check for special commands first
+            const localResponse = this.generateResponse(message);
+            if (localResponse === null) {
+                // Special command handled by generateResponse (like /stats)
+                this.hideTypingIndicator();
+                return;
+            }
             
-            // Generate response based on message content
-            const response = this.generateResponse(message);
+            // If it's a command that should use local response
+            if (message.toLowerCase().includes('/help') || message.toLowerCase().includes('/commands')) {
+                this.hideTypingIndicator();
+                this.addMessage({
+                    type: 'bot',
+                    content: localResponse
+                });
+                return;
+            }
+            
+            // Prepare conversation history for context
+            const conversationHistory = this.messages
+                .filter(msg => msg.type === 'user' || msg.type === 'bot')
+                .map(msg => ({
+                    role: msg.type === 'user' ? 'user' : 'assistant',
+                    content: msg.content
+                }))
+                .slice(-10); // Keep last 10 messages for context
+            
+            // Get response from LLM service
+            const response = await this.llmService.getResponse(message, conversationHistory);
             
             // Hide typing indicator
             this.hideTypingIndicator();
             
-            // Add bot response
+            // Add bot response with provider info
+            const currentProvider = this.llmService.getCurrentProvider();
+            const responseContent = currentProvider 
+                ? `${response}\n\n*Powered by ${this.llmConfig.getProviderConfig(currentProvider).name}*`
+                : response;
+            
             this.addMessage({
                 type: 'bot',
-                content: response
+                content: responseContent
             });
             
         } catch (error) {
@@ -520,7 +553,20 @@ class Chatbot {
     generateResponse(message) {
         const lowerMessage = message.toLowerCase();
         
-        // Simple keyword-based responses
+        // Handle special commands
+        if (lowerMessage.includes('/stats') || lowerMessage.includes('/usage')) {
+            this.showUsageStats();
+            return null; // Response will be handled by showUsageStats
+        }
+        
+        if (lowerMessage.includes('/help') || lowerMessage.includes('/commands')) {
+            return "**Available Commands:**\n" +
+                   "• `/stats` or `/usage` - Show LLM provider status and usage\n" +
+                   "• `/help` or `/commands` - Show this help message\n\n" +
+                   "You can also ask me about Abhimanyu's experience, skills, projects, education, or anything related to his background!";
+        }
+        
+        // Simple keyword-based responses (fallback when LLM is not available)
         if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
             return "I have over 5 years of experience in data science and AI. I currently work at CVS Health as a Data Scientist, where I've led end-to-end development of pipelines and applied GenAI to healthcare problems. I've also worked at DIA Ventures and completed projects at Columbia University.";
         }
@@ -630,6 +676,36 @@ class Chatbot {
         this.messages = [];
         this.chatMessages.innerHTML = '';
         this.welcomeMessageAdded = false;
+    }
+    
+    // Display LLM usage statistics
+    showUsageStats() {
+        const stats = this.llmService.getUsageStats();
+        let statsMessage = "**LLM Provider Status:**\n\n";
+        
+        Object.keys(stats).forEach(provider => {
+            const stat = stats[provider];
+            const status = stat.enabled && stat.hasApiKey ? 
+                (stat.remaining > 0 ? '✅ Available' : '❌ Usage Limit Reached') : 
+                '❌ Not Configured';
+            
+            statsMessage += `${stat.name}: ${status}\n`;
+            if (stat.enabled && stat.hasApiKey) {
+                const timePeriod = (provider === 'google' || provider === 'cohere') ? 'day' : 'month';
+                statsMessage += `  Usage: ${stat.currentUsage}/${stat.usageLimit} (${stat.percentage}%) per ${timePeriod}\n`;
+            }
+            statsMessage += '\n';
+        });
+        
+        statsMessage += "**To configure API keys:**\n";
+        statsMessage += "1. Open browser console (F12)\n";
+        statsMessage += "2. Run: chatbot.llmConfig.updateApiKey('openai', 'your-api-key')\n";
+        statsMessage += "3. Available providers: openai, anthropic, google, cohere\n";
+        
+        this.addMessage({
+            type: 'bot',
+            content: statsMessage
+        });
     }
     
     // Method to connect to external LLM APIs

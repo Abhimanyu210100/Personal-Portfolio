@@ -1,101 +1,125 @@
-# Abhimanyu's Personal Portfolio
+# Abhimanyu's Portfolio
 
-A modern, responsive personal portfolio website showcasing my experience as a Data Scientist specializing in healthcare analytics, generative AI, and large-scale data systems.
+A modern, interactive portfolio website featuring a multi-LLM powered chatbot.
 
-## 🚀 Features
+## 🌟 Features
 
-- **Modern Design**: Clean, professional design with smooth animations
-- **Responsive**: Fully responsive design that works on all devices
-- **Interactive**: Smooth scrolling, mobile navigation, and form handling
-- **SEO Optimized**: Proper meta tags and semantic HTML structure
-- **Fast Loading**: Optimized for performance and quick loading times
+- **Interactive Chatbot**: Powered by multiple LLM providers (OpenAI, Anthropic, Google, Cohere)
+- **Responsive Design**: Works seamlessly on all devices
+- **Modern UI**: Clean, professional design with smooth animations
+- **Multi-LLM System**: Automatic fallback between different AI providers
+- **Usage Tracking**: Monitor API usage and limits
 
-## 📋 Sections
+## 🤖 Chatbot Features
 
-1. **Hero Section**: Eye-catching introduction with call-to-action buttons
-2. **About**: Professional background and key achievements
-3. **Experience**: Timeline of work experience and projects
-4. **Skills**: Comprehensive skill categories with interactive tags
-5. **Contact**: Contact form and professional links
+The portfolio includes an intelligent chatbot that can answer questions about:
+- Professional experience and background
+- Technical skills and technologies
+- Projects and achievements
+- Education and certifications
+- Contact information
 
-## 🛠️ Technologies Used
+### LLM Providers Supported:
+- **Google Gemini** (Free tier: 1500 requests/day)
+- **Cohere** (Free tier: 100 requests/day)
+- **OpenAI GPT-3.5** ($5 free credit)
+- **Anthropic Claude** ($5 free credit)
 
-- HTML5
-- CSS3 (with modern features like Grid, Flexbox, and CSS Variables)
-- Vanilla JavaScript (ES6+)
-- Font Awesome for icons
-- Google Fonts (Inter)
+## 🚀 Live Demo
 
-## 🚀 Free Hosting Options
+Visit: [Your GitHub Pages URL will go here]
 
-### GitHub Pages (Recommended)
-1. Push this repository to GitHub
-2. Go to Settings > Pages
-3. Select source branch (usually `main` or `master`)
-4. Your site will be available at `https://yourusername.github.io/repository-name`
+## 🛠️ Local Development
 
-### Netlify
-1. Sign up at [netlify.com](https://netlify.com)
-2. Drag and drop the project folder to deploy
-3. Get a custom domain or use the provided subdomain
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/portfolio.git
+cd portfolio
+```
 
-### Vercel
-1. Sign up at [vercel.com](https://vercel.com)
-2. Connect your GitHub repository
-3. Automatic deployments on every push
+2. Open `index.html` in your browser or use a local server:
+```bash
+python3 -m http.server 8000
+```
+
+3. Open `http://localhost:8000` in your browser
+
+## 🔧 LLM Configuration
+
+### Setting up API Keys:
+
+1. **Get Free API Keys**:
+   - [Google AI Studio](https://makersuite.google.com/app/apikey) (Free)
+   - [Cohere Console](https://dashboard.cohere.com/) (Free)
+   - [OpenAI Platform](https://platform.openai.com/) ($5 credit)
+   - [Anthropic Console](https://console.anthropic.com/) ($5 credit)
+
+2. **Configure in Browser Console**:
+```javascript
+// Open browser console (F12) and run:
+chatbot.llmConfig.updateApiKey('google', 'your-google-api-key');
+chatbot.llmConfig.updateApiKey('cohere', 'your-cohere-api-key');
+chatbot.llmConfig.updateApiKey('openai', 'your-openai-api-key');
+chatbot.llmConfig.updateApiKey('anthropic', 'your-anthropic-api-key');
+```
+
+3. **Check Status**:
+   - Type `/stats` in the chat to see provider status
+   - Type `/help` for available commands
+
+## 📁 File Structure
+
+```
+portfolio/
+├── index.html          # Main portfolio page
+├── styles.css          # Styling and animations
+├── script.js           # Main JavaScript functionality
+├── llm-config.js       # LLM configuration and management
+├── llm-service.js      # Multi-LLM service implementation
+└── README.md           # This file
+```
 
 ## 🎨 Customization
 
-### Personal Information
-Edit `index.html` to update:
-- Your name and title
-- About section content
-- Work experience details
-- Skills and technologies
-- Contact information
+### Personal Information:
+- Update personal details in `index.html`
+- Modify the system prompt in `llm-config.js`
+- Adjust styling in `styles.css`
 
-### Styling
-Modify `styles.css` to customize:
-- Color scheme (primary colors: `#2563eb`, `#fbbf24`)
-- Typography and fonts
-- Layout and spacing
-- Animations and transitions
+### LLM Configuration:
+- Modify provider settings in `llm-config.js`
+- Adjust usage limits and models
+- Customize system prompts
 
-### Functionality
-Update `script.js` to add:
-- Additional animations
-- Form submission handling
-- Analytics integration
-- Custom interactions
+## 🔒 Security Notes
 
-## 📱 Mobile Responsive
+- API keys are stored in browser localStorage
+- Never commit API keys to the repository
+- Consider using environment variables for production
+- Monitor usage to avoid unexpected charges
 
-The portfolio is fully responsive and optimized for:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (320px - 767px)
+## 📊 Usage Monitoring
 
-## 🔧 Local Development
+The system automatically tracks:
+- API usage per provider
+- Monthly limits and resets
+- Provider availability status
+- Error handling and fallbacks
 
-1. Clone the repository
-2. Open `index.html` in your browser
-3. Or use a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   ```
+## 🤝 Contributing
+
+Feel free to fork this repository and customize it for your own portfolio!
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🤝 Contributing
+## 📞 Contact
 
-Feel free to fork this project and customize it for your own portfolio!
+- **Email**: abhiswaroop210100@gmail.com
+- **LinkedIn**: [Abhimanyu Swaroop](https://www.linkedin.com/in/abhimanyuswaroop)
+- **Portfolio**: [Your GitHub Pages URL]
 
 ---
 
-**Note**: Remember to update the contact form to point to your actual email service or backend endpoint for form submissions.
+Built with ❤️ using modern web technologies and AI-powered interactions.
