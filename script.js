@@ -387,6 +387,7 @@ class Chatbot {
         this.messages = [];
         this.isTyping = false;
         this.welcomeMessageAdded = false;
+        this.currentTypewriterTimeout = null; // Track current typewriter animation
         
         // Initialize secure LLM system using backend
         this.secureLLMService = new SecureLLMService();
@@ -485,6 +486,18 @@ class Chatbot {
     handleUserMessage() {
         const message = this.chatInput.value.trim();
         if (!message || this.isTyping) return;
+        
+        // Stop current typewriter animation and show full text
+        if (this.currentTypewriterTimeout) {
+            clearTimeout(this.currentTypewriterTimeout);
+            this.currentTypewriterTimeout = null;
+            
+            // Find the last bot message and show full text
+            const lastBotMessage = this.chatMessages.querySelector('.bot-message:last-child .message-content p');
+            if (lastBotMessage && lastBotMessage.textContent.length < this.messages[this.messages.length - 1].content.length) {
+                lastBotMessage.textContent = this.messages[this.messages.length - 1].content;
+            }
+        }
         
         // Add user message
         this.addMessage({
@@ -694,12 +707,19 @@ class Chatbot {
     
     // Typewriter effect for bot messages
     typewriterEffect(element, text, speed = 30) {
+        // Stop any existing typewriter animation
+        if (this.currentTypewriterTimeout) {
+            clearTimeout(this.currentTypewriterTimeout);
+        }
+        
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, speed);
+                this.currentTypewriterTimeout = setTimeout(typeWriter, speed);
+            } else {
+                this.currentTypewriterTimeout = null; // Clear when done
             }
         };
         typeWriter();
