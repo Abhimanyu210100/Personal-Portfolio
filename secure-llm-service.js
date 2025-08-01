@@ -112,7 +112,50 @@ Speak about him using he/his/him. Keep responses short and direct.`;
     }
 
     // Main method to get response from backend
+    // Check for prompt injection attempts
+    isPromptInjectionAttempt(message) {
+        const lowerMessage = message.toLowerCase();
+        const injectionPatterns = [
+            'ignore all previous instructions',
+            'ignore previous instructions',
+            'forget all previous instructions',
+            'forget previous instructions',
+            'disregard all previous instructions',
+            'disregard previous instructions',
+            'ignore the above instructions',
+            'ignore the instructions above',
+            'forget the above instructions',
+            'forget the instructions above',
+            'disregard the above instructions',
+            'disregard the instructions above',
+            'new instructions:',
+            'system:',
+            'assistant:',
+            'you are now',
+            'you are a different',
+            'act as if',
+            'pretend to be',
+            'roleplay as',
+            'you are no longer',
+            'stop being',
+            'ignore your training',
+            'forget your training',
+            'disregard your training',
+            'ignore your programming',
+            'forget your programming',
+            'disregard your programming'
+        ];
+        
+        return injectionPatterns.some(pattern => lowerMessage.includes(pattern));
+    }
+
     async getResponse(message, conversationHistory = []) {
+        // Check for prompt injection attempts
+        if (this.isPromptInjectionAttempt(message)) {
+            console.log('Prompt injection attempt detected:', message);
+            return "I'm designed to help answer questions about Abhimanyu Swaroop. I can't modify my instructions or behave differently. How can I help you learn about his background, experience, or skills?";
+        }
+        
         const availableProviders = await this.getAvailableProviders();
         
         if (availableProviders.length === 0) {
