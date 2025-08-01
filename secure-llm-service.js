@@ -150,7 +150,7 @@ Speak about him using he/his/him. Keep responses short and direct.`;
             },
             body: JSON.stringify({
                 message: fullMessage,
-                maxTokens: 150,
+                maxTokens: 300,
                 temperature: 0.7
             })
         });
@@ -188,6 +188,9 @@ Speak about him using he/his/him. Keep responses short and direct.`;
             .replace(/\n\s*\*?[^*]*[Gg]oogle[^*]*\*?\s*\n?/gi, '')
             .replace(/\n\s*\*?[^*]*[Cc]ohere[^*]*\*?\s*\n?/gi, '')
             .trim();
+        
+        console.log(`Full response from ${provider}:`, responseText);
+        console.log(`Response length: ${responseText.length} characters`);
         
         return responseText;
     }
