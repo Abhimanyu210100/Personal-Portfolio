@@ -528,15 +528,10 @@ class Chatbot {
             // Hide typing indicator
             this.hideTypingIndicator();
             
-            // Add bot response with provider info
-            const currentProvider = this.secureLLMService.getCurrentProvider();
-            const responseContent = currentProvider 
-                ? `${response}\n\n*Powered by ${currentProvider}*`
-                : response;
-            
+            // Add bot response
             this.addMessage({
                 type: 'bot',
-                content: responseContent
+                content: response
             });
             
         } catch (error) {
