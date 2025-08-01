@@ -26,13 +26,13 @@ const ABHIMANYU_CONTEXT = {
             degree: "Master's in Data Science",
             institution: "Columbia University",
             year: "2022",
-            focus: "Applied analytics and machine learning"
+            focus: "Machine Learning and Data Science"
         },
         {
-            degree: "Bachelor's in Engineering Materials Science",
+            degree: "Bachelor's in Materials Engineering",
             institution: "IIT Madras",
-            year: "2020",
-            focus: "Materials science and engineering"
+            year: "2021",
+            focus: "Metallurgical and Materials Engineering"
         }
     ],
 
@@ -108,33 +108,39 @@ const ABHIMANYU_CONTEXT = {
 
     // Technical Skills
     skills: {
-        programming: ["Python", "R", "SQL", "JavaScript", "Java"],
+        programming: ["Python", "SQL", "R", "C++"],
         machineLearning: ["TensorFlow", "PyTorch", "Scikit-learn", "Large Language Models", "Generative AI", "NLP"],
-        bigData: ["AWS", "Apache Spark", "Hadoop", "Kubernetes", "Docker"],
-        analytics: ["Tableau", "Power BI", "Matplotlib", "Seaborn", "Plotly"],
-        healthcare: ["Clinical Data", "Claims Analysis", "Risk Modeling", "Predictive Analytics"],
-        tools: ["Git", "Jupyter", "Databricks", "Airflow", "MLflow"]
+        bigData: ["GCP", "Hadoop", "BigQuery", "SparkSQL"],
+        analytics: ["Matplotlib", "Seaborn", "Plotly"],
+        // healthcare: ["Claims Analysis", "Predictive Analytics"],
+        tools: ["Git", "Jupyter", "Databricks", "Dataiku", "MATLAB"]
     },
 
     // Key Projects
     projects: [
         {
-            name: "Healthcare Claims Optimization",
-            description: "Saved $9.6M by optimizing overpayment detection algorithms in healthcare claims",
+            name: "Healthcare Claims Payment Optimization",
+            description: "Saved over $9.6M by optimizing and developing overpayment detection algorithms in healthcare claims",
             impact: "Major cost savings and operational efficiency improvement",
-            technologies: ["Python", "Machine Learning", "Healthcare Analytics"]
+            technologies: ["Python", "Machine Learning", "Healthcare Analytics", "GenAI"]
         },
         {
             name: "0-1 Data Pipeline Development",
-            description: "Built end-to-end pipeline combining structured and unstructured data",
-            impact: "Added $3M/year revenue, won Excellence Award",
-            technologies: ["Big Data", "ETL", "Data Engineering"]
+            description: "Built end-to-end claims prioritization pipeline combining structured and understructed data",
+            impact: "Established a new business vertical, added $3M/year revenue, won CVS Health Premier Award",
+            technologies: ["Big Data", "Best Project", "Data Engineering", "GenAI", "Collaboration", "Communication", "Consulting"]
         },
         {
             name: "GenAI Code Generation",
-            description: "Applied LLMs to auto-generate SQL/Python from healthcare documents",
-            impact: "Reduced SME involvement, accelerated development cycles",
-            technologies: ["Large Language Models", "GenAI", "NLP"]
+            description: "Applied LLMs to auto-generate insights and SQL/Python code from healthcare financial documents",
+            impact: "Reduced SME involvement, accelerated development cycles, and assisted business to set future roadmap",
+            technologies: ["Large Language Models", "GenAI", "NLP", "Consulting"]
+        },
+        {
+            name: "Recommendation System for Ecommerce",
+            description: "Designed a two-stage recommendation architecture leveraging content-based filtering and real-time ranking for hyper-personalized results",
+            impact: "Boosted recommendation click-through rate by ~30%",
+            technologies: ["Machine Learning", "Recommendation Systems", "Collaborative Filtering", "Content-Based Filtering", "Seasonality Trend Analysis"]
         },
         {
             name: "Credit Recovery ML Framework",
@@ -144,9 +150,27 @@ const ABHIMANYU_CONTEXT = {
         },
         {
             name: "Computer Vision Pipeline",
-            description: "Deployed real-time computer vision for product dimension tracking",
-            impact: "Automated quality control processes",
-            technologies: ["Computer Vision", "Real-time Processing", "Python"]
+            description: "Deployed real-time computer vision for product dimension tracking in alumnium factory cameras",
+            impact: "Automated quality control processes and reduced manual inspection time",
+            technologies: ["Computer Vision", "Real-time Processing", "Python", "IoT", "Image", "Video Processing"]
+        },
+        {
+            name: "Machine Learning Based Sintering Behavior Prediction",
+            description: "Developed a novel method to apply machine learning to predict sintering behavior of powder samples",
+            impact: "Published a research paper in the peer-reviewed journal - Computational Materials Science",
+            technologies: ["Machine Learning", "Classification", "Python", "MATLAB"]
+        },
+        {
+            name: "Harvard University: LISH Hackathon 2022",
+            description: "Created an ensemble of boosting models to predict waterpoint failure in Africa",
+            impact: "Came in 1st place for the best Machine Learning Model",
+            technologies: ["Ensemble Modeling", "CATBoost", "Machine Learning", "Boosting Algorithms", "Geospatial Data", "Classification", "Public Health", "Competition Winner", "Hackathon"]
+        },
+        {
+            name: "IIT Madras: Biker Recommendation Hackathon 2020",
+            description: "Create a machine learning based recommendation system to recommend bikers to races",
+            impact: "Placed in the top 15% of the competition",
+            technologies: ["CATBoost", "Machine Learning", "Boosting Algorithms", "Social Network Data", "Classification", "Hackathon"]
         }
     ],
 
@@ -155,19 +179,25 @@ const ABHIMANYU_CONTEXT = {
         {
             name: "Premier Award",
             organization: "CVS Health",
-            year: "2023",
+            year: "2025",
             description: "Recognized for leading technical development for claims prioritization model that streamlined audits and drove $3M in annual medical cost savings"
+        },
+        {
+            name: "1st Place",
+            organization: "Harvard University: LISH Hackathon 2022",
+            year: "2022",
+            description: "Placed 1st in the Harvard University: LISH Hackathon 2022 for building the best Machine Learning Model to predict Waterpoint Failure in Africa"
         },
         {
             name: "B.Krishnamurthy Award",
             organization: "IIT Madras",
-            year: "2020",
+            year: "2021",
             description: "Best Bachelors Thesis in Metallurgical and Materials Engineering"
         },
         {
             name: "Vijay Jagannathan Award",
             organization: "IIT Madras",
-            year: "2020",
+            year: "2021",
             description: "Award for the best academic performance in graduating batch for Metallurgical and Materials Engineering curriculum"
         }
     ],
@@ -175,36 +205,38 @@ const ABHIMANYU_CONTEXT = {
     // Research Publications
     publications: [
         {
-            title: "Data-driven sintering behavior prediction",
+            title: "Machine learning based a priori prediction on powder samples of sintering-driven abnormal grain growth",
             journal: "Computational Materials Science",
-            year: "2020",
-            type: "First-authored peer-reviewed paper"
+            year: "2021",
+            type: "First-authored Research Publication in peer-reviewed journal"
         },
         {
-            title: "Plasmonic nanoparticle behavior in solar energy devices",
+            title: "Modelling core-shell plasmonic nanoparticles as homogenous systems: An effective refractive index approach",
             journal: "Materialia",
             year: "2021",
-            type: "Research publication"
+            type: "First-authored Research Publication in peer-reviewed journal"
         }
     ],
 
     // Areas of Expertise
     expertise: [
-        "Healthcare Analytics",
         "Generative AI",
         "Large Language Models",
         "Machine Learning",
-        "Data Engineering",
+        "Healthcare Analytics",
         "Big Data Systems",
         "Predictive Analytics",
-        "Risk Modeling"
+        "Risk Modeling",
+        "Data Engineering",
+        "Data Science",
+        "Leadership"
     ],
 
     // Contact Preferences
     contact: {
         preferredMethod: "LinkedIn or email",
-        availability: "Open to discussing data science, AI, and healthcare technology opportunities",
-        interests: "Data science, AI, healthcare technology, new opportunities"
+        availability: "Open to discussing data science, and AI opportunities across industries",
+        interests: "Data science, AI, Machine Learning, GenAI, Consulting, Leadership, Finance, Hedge Funds, Quantitative Finance, new opportunities"
     }
 };
 

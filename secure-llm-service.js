@@ -146,11 +146,11 @@ Speak about him using he/his/him. Include specific examples to justify points. K
     // Local fallback response
     getLocalResponse(message) {
         const responses = [
-            "I'm Abhimanyu Swaroop, a Data Scientist at CVS Health specializing in healthcare analytics and GenAI.",
-            "As a Data Scientist, I've saved $9.6M through healthcare claims optimization and earned the Premier Award.",
-            "I hold a Master's in Data Science from Columbia University and a Bachelor's in Engineering from IIT Madras.",
-            "My expertise includes Python, SQL, ML, big data, and healthcare analytics with a focus on large language models.",
-            "I led pipeline development that earned the Premier Award and work extensively with healthcare analytics."
+            "The chat feature is currently down. Here is a short summary of Abhimanyu while we work on fixing it.",
+            "Abhimanyu Swaroop is a Data Scientist at CVS Health specializing in healthcare analytics and GenAI.",
+            "As a Data Scientist, he saved over $9.6M through healthcare claims optimization and earned the company Premier Award for his work.",
+            "He holds a Master's in Data Science from Columbia University and a Bachelor's in Technology from IIT Madras.",
+            "His expertise includes Python, SQL, ML, big data, and healthcare analytics with a focus on large language models.",
         ];
         
         return responses[Math.floor(Math.random() * responses.length)];
