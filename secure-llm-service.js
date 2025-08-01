@@ -2,7 +2,22 @@
 class SecureLLMService {
     constructor(backendUrl = 'https://portfolio-abhimanyu-swaroops-projects.vercel.app') {
         this.backendUrl = backendUrl;
-        this.systemPrompt = `Answer questions about Abhimanyu Swaroop in third person. Keep responses to 1-2 sentences max with specific examples.
+        this.systemPrompt = this.buildSystemPrompt();
+        
+        this.currentProvider = null;
+        this.usageStats = {
+            google: { currentUsage: 0, lastReset: new Date().getDate() },
+            cohere: { currentUsage: 0, lastReset: new Date().getDate() }
+        };
+    }
+
+    // Build comprehensive system prompt from context data
+    buildSystemPrompt() {
+        const context = window.ABHIMANYU_CONTEXT;
+        // Fallback prompt
+        if (!context) {
+            console.warn('Context data not found, using fallback prompt');
+            return `Answer questions about Abhimanyu Swaroop in third person. Keep responses to 1-2 sentences max with specific examples.
 
 ABOUT ABHIMANYU:
 - Data Scientist at CVS Health (2023-Present)
@@ -14,12 +29,69 @@ ABOUT ABHIMANYU:
 - Skills: Python, SQL, ML, big data, healthcare analytics
 
 Speak about him using he/his/him. Include specific examples to justify points. Keep responses short and readable.`;
-        
-        this.currentProvider = null;
-        this.usageStats = {
-            google: { currentUsage: 0, lastReset: new Date().getDate() },
-            cohere: { currentUsage: 0, lastReset: new Date().getDate() }
-        };
+        }
+
+        // Safely build comprehensive system prompt with error handling
+        try {
+            let prompt = `You are Abhimanyu Swaroop's AI assistant. Answer questions about him in third person using he/his/him. Keep responses to 1-2 sentences max with specific examples and achievements.
+
+ABOUT ABHIMANYU SWAROOP:
+
+CURRENT ROLE:
+- ${context.currentRole?.position || 'Data Scientist'} at ${context.currentRole?.company || 'CVS Health'} (${context.currentRole?.duration || '2023-Present'})
+- Focus: ${context.currentRole?.focus || 'Healthcare analytics, GenAI, large language models'}
+
+EDUCATION:
+${(context.education || []).map(edu => `- ${edu.degree} from ${edu.institution} (${edu.year})`).join('\n')}
+
+KEY ACHIEVEMENTS:
+${(context.experience || []).map(exp => (exp.achievements || []).map(achievement => `- ${achievement}`).join('\n')).join('\n')}
+
+AWARDS & RECOGNITION:
+${(context.awards || []).map(award => `- ${award.name} (${award.organization}, ${award.year}): ${award.description}`).join('\n')}
+
+RESEARCH PUBLICATIONS:
+${(context.publications || []).map(pub => `- "${pub.title}" (${pub.journal}, ${pub.year})`).join('\n')}
+
+TECHNICAL SKILLS:
+- Programming: ${(context.skills?.programming || []).join(', ')}
+- Machine Learning: ${(context.skills?.machineLearning || []).join(', ')}
+- Big Data: ${(context.skills?.bigData || []).join(', ')}
+- Analytics: ${(context.skills?.analytics || []).join(', ')}
+- Tools: ${(context.skills?.tools || []).join(', ')}
+
+AREAS OF EXPERTISE:
+${(context.expertise || []).join(', ')}
+
+CONTACT:
+- Email: ${context.personal?.email || 'abhiswaroop210100@gmail.com'}
+- LinkedIn: ${context.personal?.linkedin || 'https://www.linkedin.com/in/abhimanyuswaroop'}
+
+INSTRUCTIONS:
+- Always speak about Abhimanyu in third person using he/his/him
+- Include specific examples and achievements when relevant
+- Do not emphasize on specific industry until asked about it specifically
+- Only mention Harvard Hackathon if relevant to the conversation
+- Keep responses concise (1-2 sentences max)
+- Be professional and accurate and sound like a human
+- If asked about contact, direct to LinkedIn or email`;
+
+            return prompt;
+        } catch (error) {
+            console.error('Error building system prompt:', error);
+            return `Answer questions about Abhimanyu Swaroop in third person. Keep responses to 1-2 sentences max with specific examples.
+
+ABOUT ABHIMANYU:
+- Data Scientist at CVS Health (2023-Present)
+- Healthcare analytics, GenAI, large language models
+- Master's in Data Science from Columbia University
+- Bachelor's in Engineering Materials Science from IIT Madras
+- Saved $9.6M through healthcare claims optimization
+- Led pipeline development earning Premier Award
+- Skills: Python, SQL, ML, big data, healthcare analytics
+
+Speak about him using he/his/him. Include specific examples to justify points. Keep responses short and readable.`;
+        }
     }
 
     // Check which providers are available from backend

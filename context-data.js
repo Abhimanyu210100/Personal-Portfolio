@@ -183,12 +183,6 @@ const ABHIMANYU_CONTEXT = {
             description: "Recognized for leading technical development for claims prioritization model that streamlined audits and drove $3M in annual medical cost savings"
         },
         {
-            name: "1st Place",
-            organization: "Harvard University: LISH Hackathon 2022",
-            year: "2022",
-            description: "Placed 1st in the Harvard University: LISH Hackathon 2022 for building the best Machine Learning Model to predict Waterpoint Failure in Africa"
-        },
-        {
             name: "B.Krishnamurthy Award",
             organization: "IIT Madras",
             year: "2021",
