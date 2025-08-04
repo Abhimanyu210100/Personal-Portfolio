@@ -1215,6 +1215,37 @@ section {
         height: 50px;
         font-size: 1.2rem;
     }
+    
+    /* Mobile Chat Input Improvements */
+    .chat-input-container {
+        padding: 0.75rem;
+    }
+    
+    #chatForm {
+        gap: 0.5rem;
+        min-height: 44px; /* Better touch target */
+    }
+    
+    #chatInput {
+        padding: 0.75rem 1rem;
+        font-size: 1rem; /* Larger font for mobile */
+        min-height: 44px; /* Better touch target */
+        border-radius: 22px;
+    }
+    
+    .send-button {
+        width: 44px; /* Larger touch target */
+        height: 44px; /* Larger touch target */
+        min-width: 44px; /* Prevent shrinking */
+        min-height: 44px; /* Prevent shrinking */
+        font-size: 1rem;
+        border-radius: 50%;
+        flex-shrink: 0; /* Prevent button from shrinking */
+    }
+    
+    .send-button i {
+        font-size: 1rem;
+    }
 }
 
 /* Extra small screens */
@@ -1226,6 +1257,28 @@ section {
     
     .hero-subtitle {
         font-size: 1.1rem;
+    }
+    
+    /* Extra small screen chatbot improvements */
+    .chat-interface {
+        width: 260px;
+        height: 400px;
+    }
+    
+    .chat-input-container {
+        padding: 0.5rem;
+    }
+    
+    #chatInput {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .send-button {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
     }
     
     .hero-description {
