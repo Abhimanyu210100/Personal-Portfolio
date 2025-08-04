@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const staticEl = document.getElementById('static-text');
     const highlightEl = document.getElementById('highlighted-text');
     setTimeout(() => {
-        typeWriterDual(staticEl, highlightEl, "Hi, I'm ", "Abhimanyu");
+        typeWriterDual(staticEl, highlightEl, "Hi, I'm ", "Abhimanyu Swaroop");
     }, 650)
 });
 
