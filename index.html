@@ -22,7 +22,7 @@
                 "name": "IIT Madras"
             }
         ],
-        "description": "Data Scientist and AI Engineer specializing in healthcare analytics, machine learning, and generative AI",
+        "description": "Data Scientist and AI Engineer specializing in machine learning and generative AI",
         "url": "https://abhimanyuswaroop.com",
         "sameAs": [
             "https://www.linkedin.com/in/abhimanyuswaroop"
@@ -39,21 +39,52 @@
         ]
     }
     </script>
+    
+    <!-- Additional Structured Data for Portfolio -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Abhimanyu Swaroop Portfolio",
+        "url": "https://abhimanyuswaroop.com",
+        "description": "Professional portfolio of Abhimanyu Swaroop - Data Scientist and AI Engineer",
+        "author": {
+            "@type": "Person",
+            "name": "Abhimanyu Swaroop"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://abhimanyuswaroop.com#contact",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Organization Schema for CVS Health -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CVS Health",
+        "url": "https://www.cvshealth.com",
+        "logo": "https://www.cvshealth.com/favicon.ico"
+    }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="FUaexyR_U4R1iCjQvLYCdjsht7RtdeyUlOL_rFsmJ3E" />
     
     <!-- SEO Meta Tags -->
     <title>Abhimanyu Swaroop - Data Scientist & AI Engineer | Healthcare Analytics Expert</title>
-    <meta name="description" content="Abhimanyu Swaroop is a Data Scientist and AI Engineer at CVS Health, specializing in healthcare analytics, machine learning, and generative AI. Driving millions in cost savings through innovative data solutions.">
-    <meta name="keywords" content="Abhimanyu Swaroop, Data Scientist, AI Engineer, Healthcare Analytics, Machine Learning, CVS Health, Columbia University, IIT Madras, Python, SQL, TensorFlow, Generative AI, Large Language Models">
+    <meta name="description" content="Abhimanyu Swaroop is a Data Scientist and AI Engineer at CVS Health, specializing in healthcare analytics, machine learning, and generative AI. Driving millions in impact through innovative data solutions.">
+    <meta name="keywords" content="Abhimanyu Swaroop, Data Scientist, AI Engineer, Healthcare Analytics, Machine Learning, CVS Health, Columbia University, IIT Madras, Python, SQL, TensorFlow, Generative AI, Large Language Models, LLM, LLMs, GenAI, Consulting">
     <meta name="author" content="Abhimanyu Swaroop">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
     
     <!-- Open Graph Meta Tags for Social Media -->
     <meta property="og:title" content="Abhimanyu Swaroop - Data Scientist & AI Engineer">
-    <meta property="og:description" content="Data Scientist and AI Engineer at CVS Health, specializing in healthcare analytics, machine learning, and generative AI. Driving millions in cost savings through innovative data solutions.">
+    <meta property="og:description" content="Data Scientist and AI Engineer at CVS Health, specializing in healthcare analytics, machine learning, and generative AI. Driving millions in impact through innovative data solutions.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://abhimanyuswaroop.com">
     <meta property="og:image" content="https://abhimanyuswaroop.com/profile-image.jpg">
@@ -68,6 +99,24 @@
     <!-- Additional SEO Meta Tags -->
     <meta name="theme-color" content="#2563eb">
     <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Abhimanyu Swaroop">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Performance & Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
     <link rel="canonical" href="https://abhimanyuswaroop.com">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -110,12 +159,12 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <canvas id="floatingDots" class="floating-dots-canvas"></canvas>
+    <section id="home" class="hero" role="banner" aria-label="Hero section">
+        <canvas id="floatingDots" class="floating-dots-canvas" aria-hidden="true"></canvas>
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span id="static-text"></span><span id="highlighted-text" class="highlight"></span>
+                    <span id="static-text" aria-label="Introduction text"></span><span id="highlighted-text" class="highlight" aria-label="Name highlight"></span>
                 </h1>
                 <h2 class="hero-subtitle">Data Scientist & AI Engineer</h2>
                 <p class="hero-description">
@@ -139,9 +188,9 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
+    <section id="about" class="about" role="region" aria-labelledby="about-title">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <h2 id="about-title" class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
                     <p>
