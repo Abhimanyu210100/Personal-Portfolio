@@ -538,21 +538,41 @@ class Chatbot {
             // Get response from secure LLM service (no conversation history to save tokens and prevent follow-ups)
             const response = await this.secureLLMService.getResponse(message, []);
             
+            // Check if we're using local fallback (not Google/Gemini)
+            const currentProvider = this.secureLLMService?.getCurrentProvider();
+            const isUsingLocalFallback = !currentProvider || currentProvider !== 'google';
+            
+            // Add warning prefix if using local fallback
+            let finalResponse = response;
+            if (isUsingLocalFallback) {
+                finalResponse = "⚠️ **Model Daily Limit Reached. Responses will be less accurate.**\n\n" + response;
+            }
+            
             // Hide typing indicator
             this.hideTypingIndicator();
             
             // Add bot response
             this.addMessage({
                 type: 'bot',
-                content: response
+                content: finalResponse
             });
             
         } catch (error) {
             console.error('Error processing message:', error);
             this.hideTypingIndicator();
+            
+            // Check if we're using local fallback due to LLM service errors
+            const currentProvider = this.secureLLMService?.getCurrentProvider();
+            const isUsingLocalFallback = !currentProvider || currentProvider !== 'google';
+            
+            let errorMessage = "I'm sorry, I encountered an error. Please try again.";
+            if (isUsingLocalFallback) {
+                errorMessage = "⚠️ **Model Daily Limit Reached. Responses will be less accurate.**\n\n" + errorMessage;
+            }
+            
             this.addMessage({
                 type: 'bot',
-                content: "I'm sorry, I encountered an error. Please try again."
+                content: errorMessage
             });
         }
     }
@@ -573,37 +593,46 @@ class Chatbot {
                    "You can also ask me about Abhimanyu's experience, skills, projects, education, or anything related to his background!";
         }
         
+        // Check if we're using local fallback (not Google/Gemini)
+        const currentProvider = window.llmService?.getCurrentProvider();
+        const isUsingLocalFallback = !currentProvider || currentProvider !== 'google';
+        
+        let warningPrefix = '';
+        if (isUsingLocalFallback) {
+            warningPrefix = "⚠️ **Model Daily Limit Reached. Responses will be less accurate.**\n\n";
+        }
+        
         // Simple keyword-based responses (fallback when LLM is not available)
         if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
-            return "Abhimanyu is a Data Scientist at CVS Health with 5+ years experience, having saved $9.6M through healthcare claims optimization and earned a Premier Award.";
+            return warningPrefix + "Abhimanyu is a Data Scientist at CVS Health with 5+ years experience, having saved $9.6M through healthcare claims optimization and earned a Premier Award.";
         }
         
         if (lowerMessage.includes('skill') || lowerMessage.includes('technology')) {
-            return "His skills include Python, SQL, machine learning, and big data technologies, demonstrated through his pipeline development work at CVS Health.";
+            return warningPrefix + "His skills include Python, SQL, machine learning, and big data technologies, demonstrated through his pipeline development work at CVS Health.";
         }
         
         if (lowerMessage.includes('project') || lowerMessage.includes('achievement')) {
-            return "He saved $9.6M through healthcare claims optimization and earned a Premier Award for building end-to-end data pipelines.";
+            return warningPrefix + "He saved $9.6M through healthcare claims optimization and earned a Premier Award for building end-to-end data pipelines.";
         }
         
         if (lowerMessage.includes('education') || lowerMessage.includes('degree')) {
-            return "He has a Master's in Data Science from Columbia University and a Bachelor's from IIT Madras, with research published in Computational Materials Science.";
+            return warningPrefix + "He has a Master's in Data Science from Columbia University and a Bachelor's from IIT Madras, with research published in Computational Materials Science.";
         }
         
         if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('linkedin')) {
-            return "You can reach him through the contact form or LinkedIn for data science and healthcare technology opportunities.";
+            return warningPrefix + "You can reach him through the contact form or LinkedIn for data science and healthcare technology opportunities.";
         }
         
         if (lowerMessage.includes('healthcare') || lowerMessage.includes('cvs')) {
-            return "At CVS Health, he works on healthcare analytics and AI solutions, including claims analysis and risk modeling.";
+            return warningPrefix + "At CVS Health, he works on healthcare analytics and AI solutions, including claims analysis and risk modeling.";
         }
         
         if (lowerMessage.includes('ai') || lowerMessage.includes('genai') || lowerMessage.includes('llm')) {
-            return "He specializes in GenAI and large language models, applying them to auto-generate SQL/Python from healthcare documents.";
+            return warningPrefix + "He specializes in GenAI and large language models, applying them to auto-generate SQL/Python from healthcare documents.";
         }
         
         // Default response
-        return "That's an interesting question! I'm Abhimanyu's AI assistant, and I can help you learn more about his experience in data science, AI, healthcare analytics, and his projects. What would you like to know?";
+        return warningPrefix + "That's an interesting question! I'm Abhimanyu's AI assistant, and I can help you learn more about his experience in data science, AI, healthcare analytics, and his projects. What would you like to know?";
     }
     
     // Helper function to remove attribution text
